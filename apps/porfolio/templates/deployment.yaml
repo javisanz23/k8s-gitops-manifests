@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: porfolio-deployment
+  namespace: porfolio-prod
+  labels:
+    app: porfolio-javi
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: porfolio-javi
+  template:
+    metadata:
+      labels:
+        app: porfolio-javi
+    spec:
+      containers:
+        - name: porfolio-container
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
