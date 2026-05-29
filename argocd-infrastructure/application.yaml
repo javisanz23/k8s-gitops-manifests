@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: porfolio-gitops-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/javisanz23/k8s-gitops-manifests.git'
+    targetRevision: HEAD
+    path: apps/porfolio
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: porfolio-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeave: true
+    syncOptions:
+      - CreateNamespace=true

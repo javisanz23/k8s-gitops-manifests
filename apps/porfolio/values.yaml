@@ -1,0 +1,19 @@
+replicaCount: 2
+
+image:
+  repository: javisanz23/porfolio-javi # Cambiado a tu Docker Hub para que ArgoCD pueda tirar de ella si es público
+  tag: "v12"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: porfolio.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
